@@ -72,12 +72,6 @@ As of this repository, **Python 3.14 is not officially supported by Kivy**, so i
 
 ---
 
-## 📸 Output
-
-*(Add a screenshot here once the application is running.)*
-
----
-
 ## 📜 License
 
 This project is intended for educational purposes as part of my Python learning journey.
