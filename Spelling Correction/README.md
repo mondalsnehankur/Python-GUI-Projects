@@ -1,678 +1,220 @@
-# Day 6: Tuples
+# Text Correction using TextBlob
 
-Part of my **30 Days of Python** learning journey.
+A simple Python program that uses the **TextBlob** library to automatically identify and correct misspelled words.
 
-This day focuses on **tuples**, one of Python's built-in collection data types. The program covers tuple creation, indexing, slicing, immutability, conversion between tuples and lists, joining tuples, tuple methods, unpacking, nested tuples, and useful built-in functions.
+## 📌 Overview
 
----
+This project demonstrates basic **spell correction** in Python using TextBlob.
 
-## 📌 Table of Contents
+The program takes a list of intentionally misspelled words, creates `TextBlob` objects for each word, and uses the `.correct()` method to generate corrected versions.
 
-* [Overview](#-overview)
-* [What is a Tuple?](#-what-is-a-tuple)
-* [Topics Covered](#-topics-covered)
+### Example
 
-  * [Creating a Tuple](#1-creating-a-tuple)
-  * [Tuple Length](#2-tuple-length)
-  * [Accessing Tuple Items](#3-accessing-tuple-items)
-  * [Negative Indexing](#4-negative-indexing)
-  * [Slicing Tuples](#5-slicing-tuples)
-  * [Tuple Immutability](#6-tuple-immutability)
-  * [Tuple to List Conversion](#7-changing-tuples-to-lists)
-  * [Checking Items](#8-checking-an-item-in-a-tuple)
-  * [Joining Tuples](#9-joining-tuples)
-  * [Tuple Repetition](#10-tuple-repetition)
-  * [`count()`](#11-count)
-  * [`index()`](#12-index)
-  * [Deleting Tuples](#13-deleting-tuples)
-  * [Nested Tuples](#14-nested-tuples)
-  * [Tuple Unpacking](#15-tuple-unpacking)
-  * [Built-in Functions](#16-built-in-functions-with-tuples)
-  * [List to Tuple Conversion](#17-list-to-tuple-conversion)
-  * [Tuple Comparison](#18-tuple-comparison)
-* [Tuple Methods](#-tuple-methods)
-* [Tuple vs List](#-tuple-vs-list)
-* [Project Structure](#-project-structure)
-* [How to Run](#-how-to-run)
-* [Learning Outcomes](#-learning-outcomes)
+Input:
 
----
-
-## 🔎 Overview
-
-A **tuple** is an ordered collection of elements that is **immutable**, meaning its elements cannot be changed after the tuple is created.
-
-Tuples are written using parentheses:
-
-```python
-fruits = ('banana', 'orange', 'mango', 'lemon')
-```
-
-Unlike lists, tuples do not support operations such as:
-
-```python
-append()
-insert()
-remove()
-```
-
-and individual elements cannot be reassigned.
-
----
-
-# 📚 Topics Covered
-
-## 1. Creating a Tuple
-
-An empty tuple can be created using either:
-
-```python
-empty_tuple = ()
-```
-
-or:
-
-```python
-empty_tuple = tuple()
-```
-
-A tuple with values:
-
-```python
-fruits = ('banana', 'orange', 'mango', 'lemon')
-```
-
-A tuple can also contain different data types:
-
-```python
-mixed_tuple = ('Python', 30, 3.14, True)
-```
-
-### Single-item Tuple
-
-A single-item tuple requires a trailing comma:
-
-```python
-single_item = ('Python',)
-```
-
-Without the comma:
-
-```python
-single_item = ('Python')
-```
-
-this is simply a string, not a tuple.
-
----
-
-## 2. Tuple Length
-
-The `len()` function returns the number of elements.
-
-```python
-fruits = ('banana', 'orange', 'mango', 'lemon')
-
-print(len(fruits))
+```text
+Machne
+Learnin
+Comptgn
 ```
 
 Output:
 
 ```text
-4
+Machine Learning Computing
 ```
 
 ---
 
-## 3. Accessing Tuple Items
+## ✨ Features
 
-Tuples use **zero-based indexing**, just like lists.
+* Detects misspelled words
+* Uses TextBlob for spelling correction
+* Processes multiple words using a loop
+* Displays the original misspelled words
+* Prints the corrected words
 
-```python
-fruits = ('banana', 'orange', 'mango', 'lemon')
+---
 
-print(fruits[0])
-print(fruits[1])
+## 🛠 Technologies Used
+
+* **Python 3**
+* **TextBlob**
+
+---
+
+## 📦 Installation
+
+First, make sure Python is installed.
+
+Install TextBlob using `pip`:
+
+```bash
+pip install textblob
 ```
 
-Output:
+If required, download the TextBlob corpora:
+
+```bash
+python -m textblob.download_corpora
+```
+
+---
+
+## 📂 How the Code Works
+
+### 1. Import TextBlob
+
+```python
+from textblob import TextBlob
+```
+
+The `TextBlob` class provides natural language processing functionality, including spelling correction.
+
+---
+
+### 2. Define Misspelled Words
+
+```python
+words = ["Machne", "Learnin", "Comptgn"]
+```
+
+The list contains intentionally misspelled words.
+
+---
+
+### 3. Create an Empty List
+
+```python
+corrected_words = []
+```
+
+This list stores the `TextBlob` objects corresponding to the input words.
+
+---
+
+### 4. Convert Words into TextBlob Objects
+
+```python
+for i in words:
+    corrected_words.append(TextBlob(i))
+```
+
+Each word is converted into a `TextBlob` object and added to `corrected_words`.
+
+---
+
+### 5. Display the Original Words
+
+```python
+print("Wrong words :", words)
+```
+
+This prints the original misspelled words.
+
+---
+
+### 6. Correct the Words
+
+```python
+for i in corrected_words:
+    print(i.correct(), end=" ")
+```
+
+The `.correct()` method attempts to identify the most likely spelling correction for each word.
+
+---
+
+## ▶️ Example Output
 
 ```text
-banana
-orange
+Wrong words : ['Machne', 'Learnin', 'Comptgn']
+Corrected Words are :
+Machine Learning Computing
 ```
 
-The last element can also be accessed using:
-
-```python
-fruits[len(fruits) - 1]
-```
+> **Note:** TextBlob's spelling correction is probabilistic, so the exact correction may vary depending on the input word and TextBlob's underlying spelling corpus. For unusual or heavily misspelled words, the result may not always be what you expect.
 
 ---
 
-## 4. Negative Indexing
-
-Negative indexing starts from the end of the tuple.
-
-```python
-fruits = ('banana', 'orange', 'mango', 'lemon')
-
-print(fruits[-1])
-print(fruits[-2])
-```
-
-Output:
+## 📂 Project Structure
 
 ```text
-lemon
-mango
-```
-
-| Index | Element |
-| ----: | ------- |
-|  `-1` | lemon   |
-|  `-2` | mango   |
-|  `-3` | orange  |
-|  `-4` | banana  |
-
----
-
-## 5. Slicing Tuples
-
-Tuples support slicing using:
-
-```text
-tuple[start:stop]
-```
-
-The `stop` index is excluded.
-
-```python
-fruits = ('banana', 'orange', 'mango', 'lemon')
-
-print(fruits[1:3])
-```
-
-Output:
-
-```text
-('orange', 'mango')
-```
-
-Other examples:
-
-```python
-print(fruits[0:])
-print(fruits[1:])
-print(fruits[-4:])
-print(fruits[-3:-1])
-print(fruits[-3:])
-```
-
----
-
-## 6. Tuple Immutability
-
-The most important characteristic of a tuple is that it is **immutable**.
-
-This means the following is invalid:
-
-```python
-fruits = ('banana', 'orange', 'mango', 'lemon')
-
-fruits[0] = 'apple'
-```
-
-It produces:
-
-```text
-TypeError: 'tuple' object does not support item assignment
-```
-
-You cannot directly modify an existing tuple.
-
----
-
-## 7. Changing Tuples to Lists
-
-If a tuple needs to be modified, it can temporarily be converted into a list.
-
-```python
-fruits = ('banana', 'orange', 'mango', 'lemon')
-
-fruits = list(fruits)
-
-fruits[0] = 'apple'
-
-fruits = tuple(fruits)
-```
-
-The result is:
-
-```python
-('apple', 'orange', 'mango', 'lemon')
-```
-
-This demonstrates the relationship between mutable lists and immutable tuples.
-
----
-
-## 8. Checking an Item in a Tuple
-
-The `in` operator checks whether an item exists.
-
-```python
-fruits = ('banana', 'orange', 'mango', 'lemon')
-
-print('orange' in fruits)
-print('apple' in fruits)
-```
-
-Output:
-
-```text
-True
-False
-```
-
-The `not in` operator can also be used:
-
-```python
-print('apple' not in fruits)
-```
-
----
-
-## 9. Joining Tuples
-
-Two or more tuples can be combined using the `+` operator.
-
-```python
-fruits = ('banana', 'orange', 'mango', 'lemon')
-
-vegetables = (
-    'Tomato',
-    'Potato',
-    'Cabbage',
-    'Onion',
-    'Carrot'
-)
-
-fruits_and_vegetables = fruits + vegetables
-```
-
-Result:
-
-```text
-('banana', 'orange', 'mango', 'lemon',
- 'Tomato', 'Potato', 'Cabbage', 'Onion', 'Carrot')
-```
-
----
-
-## 10. Tuple Repetition
-
-The `*` operator can repeat the contents of a tuple.
-
-```python
-numbers = (1, 2, 3)
-
-print(numbers * 3)
-```
-
-Output:
-
-```text
-(1, 2, 3, 1, 2, 3, 1, 2, 3)
-```
-
----
-
-## 11. `count()`
-
-The `count()` method returns the number of times an item occurs.
-
-```python
-numbers = (1, 2, 3, 2, 4, 2, 5)
-
-print(numbers.count(2))
-```
-
-Output:
-
-```text
-3
-```
-
----
-
-## 12. `index()`
-
-The `index()` method returns the index of the first occurrence of an item.
-
-```python
-fruits = ('banana', 'orange', 'mango', 'lemon')
-
-print(fruits.index('orange'))
-```
-
-Output:
-
-```text
-1
-```
-
----
-
-## 13. Deleting Tuples
-
-Individual elements cannot be deleted from a tuple.
-
-However, the entire tuple can be deleted using `del`.
-
-```python
-fruits = ('banana', 'orange', 'mango', 'lemon')
-
-del fruits
-```
-
-After deletion, attempting to access `fruits` produces a `NameError`.
-
----
-
-## 14. Nested Tuples
-
-Tuples can contain other tuples.
-
-```python
-student = (
-    ('Snehankur', 'Mondal'),
-    ('MCA', 'Python'),
-    (2026, 2028)
-)
-```
-
-Nested elements can be accessed using multiple indexes:
-
-```python
-print(student[0])
-print(student[1][0])
-```
-
----
-
-## 15. Tuple Unpacking
-
-Tuple unpacking allows the individual elements of a tuple to be assigned to variables.
-
-```python
-person = ('Snehankur', 'Mondal', 24)
-
-first_name, last_name, age = person
-```
-
-Now:
-
-```text
-first_name → Snehankur
-last_name  → Mondal
-age        → 24
-```
-
-The number of variables must normally match the number of elements being unpacked.
-
----
-
-## 16. Built-in Functions with Tuples
-
-Several Python built-in functions work with tuples.
-
-```python
-numbers = (10, 20, 30, 40, 50)
-
-print(len(numbers))
-print(min(numbers))
-print(max(numbers))
-print(sum(numbers))
-```
-
-Output:
-
-```text
-5
-10
-50
-150
-```
-
----
-
-## 17. List to Tuple Conversion
-
-A list can be converted into a tuple using `tuple()`.
-
-```python
-languages = ['Python', 'Java', 'C++', 'JavaScript']
-
-languages_tuple = tuple(languages)
-```
-
-Result:
-
-```text
-('Python', 'Java', 'C++', 'JavaScript')
-```
-
----
-
-## 18. Tuple Comparison
-
-Tuples can be compared using standard comparison operators.
-
-```python
-tuple_1 = (1, 2, 3)
-tuple_2 = (1, 2, 3)
-tuple_3 = (1, 2, 4)
-
-print(tuple_1 == tuple_2)
-print(tuple_1 == tuple_3)
-```
-
-Output:
-
-```text
-True
-False
-```
-
----
-
-# 🔧 Tuple Methods
-
-Tuples intentionally have fewer methods than lists because they are immutable.
-
-| Method    | Description                               |
-| --------- | ----------------------------------------- |
-| `count()` | Counts occurrences of an item             |
-| `index()` | Returns the index of the first occurrence |
-
-Useful built-in functions include:
-
-| Function  | Purpose                           |
-| --------- | --------------------------------- |
-| `len()`   | Returns tuple length              |
-| `min()`   | Returns smallest value            |
-| `max()`   | Returns largest value             |
-| `sum()`   | Returns sum of numeric values     |
-| `tuple()` | Converts an iterable into a tuple |
-
----
-
-# ⚖️ Tuple vs List
-
-| Feature                       | List | Tuple |
-| ----------------------------- | ---- | ----- |
-| Syntax                        | `[]` | `()`  |
-| Ordered                       | ✅    | ✅     |
-| Mutable                       | ✅    | ❌     |
-| Allows duplicates             | ✅    | ✅     |
-| Indexing                      | ✅    | ✅     |
-| Slicing                       | ✅    | ✅     |
-| `append()`                    | ✅    | ❌     |
-| `remove()`                    | ✅    | ❌     |
-| `insert()`                    | ✅    | ❌     |
-| `count()`                     | ✅    | ✅     |
-| `index()`                     | ✅    | ✅     |
-| Can be used as dictionary key | ❌*   | ✅*    |
-
-* A tuple can be hashable and used as a dictionary key if all of its elements are hashable.
-
-### When should you use a tuple?
-
-Use a tuple when:
-
-* The collection should not be modified.
-* You want to represent fixed data.
-* You want to communicate that the data is immutable.
-* You need a hashable collection for use as a dictionary key or set element.
-
----
-
-# 📂 Project Structure
-
-```text
-06_Day_Tuples/
+TextBlob-Spell-Correction/
 │
-├── tuples.py
+├── spell_correction.py
 └── README.md
 ```
 
 ---
 
-# ▶️ How to Run
+## ▶️ How to Run
 
-Make sure Python 3 is installed.
-
-Run:
+Clone the repository:
 
 ```bash
-python tuples.py
+git clone https://github.com/your-username/textblob-spell-correction.git
 ```
 
-No external libraries are required.
+Navigate to the project:
 
----
-
-# 🧠 Learning Outcomes
-
-After completing Day 6, you should be able to:
-
-* Create empty and non-empty tuples.
-* Understand tuple immutability.
-* Find the length of a tuple.
-* Access tuple elements using positive indexes.
-* Use negative indexing.
-* Slice tuples.
-* Check whether an element exists.
-* Join multiple tuples.
-* Repeat tuples.
-* Use `count()` and `index()`.
-* Convert tuples to lists and lists to tuples.
-* Delete an entire tuple.
-* Work with nested tuples.
-* Unpack tuple elements.
-* Use built-in functions such as `len()`, `min()`, `max()`, and `sum()`.
-
----
-
-# 💻 Exercises
-
-The original Day 6 challenge also contains exercises. These can be maintained separately from the concept demonstrations.
-
-## Level 1
-
-Suggested exercises:
-
-1. Create an empty tuple.
-2. Create a tuple containing names of your sisters and brothers.
-3. Join the brothers and sisters tuples and assign the result to `siblings`.
-4. Find the number of siblings.
-5. Add the names of your father and mother to the tuple and assign it to `family_members`.
-6. Unpack the family tuple into individual variables.
-7. Create tuples representing `fruits`, `vegetables`, and `animal_products`.
-8. Join the three tuples and assign the result to `food_stuff_tp`.
-9. Convert `food_stuff_tp` into a list.
-10. Slice out the middle item or items.
-11. Slice out the first three items.
-12. Slice out the last three items.
-13. Delete `food_stuff_tp`.
-14. Check whether an item exists in a tuple using `in`.
-
----
-
-## Level 2
-
-Suggested exercises:
-
-1. Create a tuple containing the names of cities you would like to visit.
-2. Find the length of the tuple.
-3. Access the first and last cities.
-4. Check whether a particular city exists in the tuple.
-5. Convert the tuple to a list.
-6. Modify the list.
-7. Convert the list back to a tuple.
-8. Practice tuple unpacking.
-9. Create a nested tuple and access its elements.
-10. Practice `count()` and `index()`.
-
----
-
-# 📝 Notes
-
-The main difference between lists and tuples is **mutability**:
-
-```python
-# List - mutable
-numbers = [1, 2, 3]
-numbers[0] = 10
-
-# Tuple - immutable
-numbers = (1, 2, 3)
-
-# numbers[0] = 10  # TypeError
+```bash
+cd textblob-spell-correction
 ```
 
-A tuple does not become mutable simply because it contains mutable objects. For example:
+Install the dependency:
 
-```python
-data = ([1, 2], [3, 4])
-
-data[0].append(5)
-
-print(data)
+```bash
+pip install textblob
 ```
 
-This is valid because the tuple itself has not been changed; the list stored inside it has been modified.
+Download the required corpora:
+
+```bash
+python -m textblob.download_corpora
+```
+
+Run the program:
+
+```bash
+python spell_correction.py
+```
 
 ---
 
-## 🛠 Requirements
+## 🧠 Concepts Demonstrated
 
-* Python 3.x
-* No external libraries
+* Python lists
+* `for` loops
+* List manipulation
+* External Python libraries
+* TextBlob objects
+* Spell correction
+* String output formatting
+* Natural Language Processing (NLP) basics
 
 ---
 
-## 🎯 Purpose
+## 🚀 Possible Improvements
 
-This project is part of my **30 Days of Python** challenge and is intended to build a strong foundation in Python data structures before moving on to more advanced concepts.
+This basic implementation can be extended to:
+
+* Accept words from user input
+* Correct complete sentences
+* Read text from a file
+* Create a GUI spell checker
+* Highlight misspelled words
+* Provide multiple correction suggestions
+* Build a real-time spell-checking application
+
+---
+
+## 🎯 Learning Outcome
+
+This project provides a basic introduction to using a third-party **Natural Language Processing (NLP)** library in Python and demonstrates how pre-trained linguistic resources can be used for automated spelling correction.
 
 ---
 
 ## 📄 License
 
 This project is intended for educational and learning purposes.
-
----
-
-**Day 6 completed — Tuples. 🐍**
